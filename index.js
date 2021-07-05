@@ -8,7 +8,6 @@ const {MONGODB} = require('./config.js');
 
 
 //setting up apollo playground server
-
 const server = new ApolloServer({
     typeDefs,
     resolvers
