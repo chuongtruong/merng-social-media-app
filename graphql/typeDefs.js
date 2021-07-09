@@ -7,10 +7,10 @@ module.exports = gql`
   type Post {
     id: ID!
     body: String!
-    createdAt: String
+    createdAt: String!
     username: String!
-    comments:[Comment]!
-    likes:[Like]!
+    comments: [Comment]!
+    likes: [Like]!
     likeCount: Int!
     commentCount: Int!
   }

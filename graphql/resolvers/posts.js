@@ -41,8 +41,10 @@ module.exports = {
             //TODO: create a post
 
             const user = checkAuth(context);
-            console.log(user);
-
+            //trim(), remove leading and ending space of the string and return the string
+            if(body.trim() === '') {
+                throw new Error("Post body must not be empty");
+            }
             const newPost = new Post({
                 body,
                 user: user.id,
