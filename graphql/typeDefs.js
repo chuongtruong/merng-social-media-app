@@ -4,8 +4,6 @@ const { gql } = require("apollo-server");
 module.exports = gql`
 
   # create a type Post, so that query getPost can be assigned as Post
-
-  
   type Post {
     id: ID!
     body: String!
@@ -13,6 +11,8 @@ module.exports = gql`
     username: String!
     comments:[Comment]!
     likes:[Like]!
+    likeCount: Int!
+    commentCount: Int!
   }
 
   type Comment {
@@ -62,5 +62,9 @@ module.exports = gql`
     createComment(postId: String!,body: String!): Post!
     deleteComment(postId:String!, commentId: String!): Post!
     likePost(postId: ID!): Post!
+  }
+
+  type Subscription {
+    newPost: Post!
   }
 `;
