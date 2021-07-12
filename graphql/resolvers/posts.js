@@ -49,8 +49,12 @@ module.exports = {
                 body,
                 user: user.id,
                 username: user.username,
-                createAt: new Date().toISOString()
+                createdAt: new Date().toISOString()
             });
+
+            console.log("New Post CreatedAt: ", newPost.createdAt);
+            console.log("Test new Date(): ", new Date().toISOString());
+
 
             const post = await newPost.save();
 

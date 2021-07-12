@@ -1,0 +1,48 @@
+Authorization
+
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZTJjNWIwY2U4MDY1Mzc2NGFiMDI1NyIsImVtYWlsIjoidXNlckBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IkpvaG4iLCJpYXQiOjE2MjYwNDQ3OTYsImV4cCI6MTYyNjA0ODM5Nn0.V5ejiGDaNcVNfRhUuOH50gUZgagHlf5wnv_fFUB29Uo"
+}
+
+Regsiter New User
+
+mutation registerNew {
+  register(
+    registerInput: {
+      username: "Brett"
+      password: "123456"
+      confirmPassword: "123456"
+      email: "brett@gmail.com"
+    }
+  ){
+    id
+    email
+    token
+    username
+  }
+}
+
+Sign in
+
+mutation {
+  login(username: "John", password: "123456") {
+    id
+    token
+  }
+}
+
+
+# Write your query or mutation here
+query getPost{
+  getPost(postId:"60e527aba943b27a04399e32"){
+    body
+  }
+}
+
+query getPosts{
+  getPosts{
+    body
+  }
+}
+
+
