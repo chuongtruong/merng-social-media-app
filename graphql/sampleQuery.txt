@@ -1,10 +1,10 @@
-Authorization
+*** Authorization
 
 {
   "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZTJjNWIwY2U4MDY1Mzc2NGFiMDI1NyIsImVtYWlsIjoidXNlckBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IkpvaG4iLCJpYXQiOjE2MjYwNDQ3OTYsImV4cCI6MTYyNjA0ODM5Nn0.V5ejiGDaNcVNfRhUuOH50gUZgagHlf5wnv_fFUB29Uo"
 }
 
-Regsiter New User
+*** Regsiter New User
 
 mutation registerNew {
   register(
@@ -22,7 +22,7 @@ mutation registerNew {
   }
 }
 
-Sign in
+*** Sign in
 
 mutation {
   login(username: "John", password: "123456") {
@@ -32,7 +32,7 @@ mutation {
 }
 
 
-# Write your query or mutation here
+*** Write your query or mutation here
 query getPost{
   getPost(postId:"60e527aba943b27a04399e32"){
     body
@@ -45,4 +45,31 @@ query getPosts{
   }
 }
 
+
+*** Like a post
+
+mutation likePost{
+  likePost(postId:"60eb8c680b22a33bf0094a28"){
+    likeCount
+    likes{
+      id
+      createdAt
+    }
+  }
+}
+
+
+*** Comment on a post ***
+
+mutation commentOnPost{
+  createComment(postId:"60eb8c680b22a33bf0094a28",body:"Thank you, I'm doing good. Hbu ?"){
+    commentCount
+    comments{
+      id
+      username
+      createdAt
+      body
+    }
+  }
+}
 
