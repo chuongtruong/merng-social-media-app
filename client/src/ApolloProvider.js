@@ -23,7 +23,7 @@ const authLink = setContext(() => {
 
 
 const client = new ApolloClient({
-    //3:59:42
+    //3:59:42, basically, concat httpLink so that apollo will have header...
     link: authLink.concat(httpLink),
     cache: new InMemoryCache
 })
