@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import { Card, Icon, Label, Image, Button } from "semantic-ui-react";
 import moment from "moment";
 
+//need AuthContext to have access to current user who logged in
+//access user will let us know what post that user has
+//so we can add delete button accordingly
+import {AuthContext} from "../context/auth"
 //when post is passed from Home, we can destrcucture post like post:{something, something, something}
 
 function PostCard({
   post: { body, createdAt, id, username, likeCount, commentCount, likes, comments }, post
 }) {
 
-  console.log('commentCount', comments);
   // console.log("Props passed from HOME.js ", body);
   
   //Like post function
@@ -48,7 +51,7 @@ function PostCard({
         </Button>
 
         {/* Comments */}
-        <Button as="div" labelPosition="right" onClick={commentOnPost}>
+        <Button as="div" labelPosition="right" as={Link} to={`/posts/${id}`}>
           <Button color="teal" basic>
             <Icon name="chat" />
           </Button>
@@ -56,6 +59,8 @@ function PostCard({
             {comments.length}
           </Label>
         </Button>
+
+
       </Card.Content>
     </Card>
   );
