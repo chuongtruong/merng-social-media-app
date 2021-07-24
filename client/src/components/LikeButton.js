@@ -1,41 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import { Button, Label, Icon } from 'semantic-ui-react';
 
-import {Button, Label, Icon} from 'semantic-ui-react';
-
-export default function LikeButton({ user, post: { id, likeCount, likes } }) {
+function LikeButton({ user, post: { id, likeCount, likes } }) {
     // determine whether current user like the post or not
-    const [liked,setLiked] = useState(false);
+    const [liked, setLiked] = useState(false);
 
-    useEffect(() =>{
-        if(user && likes.find(like => like.username === user.username)){
-            setLiked(true)
+    useEffect(() => {
+        if (user && likes.find((like) => like.username === user.username)) {
+          setLiked(true);
         } else {
-            setLiked(false)
+            setLiked(false);    
         }
-    }, [user, likes]);
+      }, [user, likes]);
 
-    const [likePost, {error} ] = useMutation(LIKE_POST_MUTATION, {
-        variables: {postIdL: id}
-    });
-
-    const likeButton = user ?  (
+      const [likePost] = useMutation(LIKE_POST_MUTATION, {
+        variables: { postId: id }
+      });
+    
+    const likeButton = user ? (
+        //if there's a user logged in
+        //check if that user liked the post or not
+        //change like button accordingly
         liked ? (
-            <Button color="teal">
+          <Button color="teal">
             <Icon name="heart" />
           </Button>
         ) : (
-            <Button color="teal" basic>
+            //basic properties is like to NOT fill the button with teal color
+          <Button color="teal" basic>
             <Icon name="heart" />
           </Button>
         )
-    ) : (
-        <Button as={Link} to="/login" color="teal" basic>
-        <Icon name="heart" />
-      </Button>
-    )
+      ) : (
+          //if there's no user loggin -> redirect to a login page
+        <Button as={Link} to="/login" color="teal">
+          <Icon name="heart" />
+        </Button>
+      );
 
   return (
     <div>
@@ -54,10 +58,11 @@ const LIKE_POST_MUTATION = gql`
         likePost(postId: $postId){
             id
             likes{
-                likes username
+                id username
             }
             likeCount
         }
     }
 `
 
+export default LikeButton;
