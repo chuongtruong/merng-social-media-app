@@ -50,7 +50,7 @@ function PostCard({
       </Card.Content>
       <Card.Content extra>
         {/* Like */}
-        <LikeButton post={{id,likes,likeCount}}/>
+        <LikeButton user={user} post={{id,likes,likeCount}}/>
 
         {/* Comments */}
         <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
