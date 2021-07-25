@@ -11,12 +11,11 @@ import { AuthProvider } from "./context/auth";
 // AuthRoute doesn't need to be destructured since it's the only fuction that was exported default from AuthRoute.js
 import AuthRoute from './util/AuthRoute'
 
-
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MenuBar from "./components/MenuBar";
-// import SinglePost from "./pages/SinglePost";
+import SinglePost from "./pages/SinglePost";
 
 function App() {
   return (
@@ -32,7 +31,7 @@ function App() {
 
           <AuthRoute exact path="/login" component={Login} />
           <AuthRoute exact path="/register" component={Register} />
-          {/* <Route exact path="/post/:postId" component={SinglePost}/> */}
+          <Route exact path="/posts/:postId" component={SinglePost} />
         </Router>
       </Container>
     </AuthProvider>
