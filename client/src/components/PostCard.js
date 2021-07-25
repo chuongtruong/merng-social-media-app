@@ -8,6 +8,7 @@ import moment from "moment";
 //so we can add delete button accordingly
 import { AuthContext } from "../context/auth";
 import LikeButton from "./LikeButton";
+import DeleteButton from "./DeleteButton";
 
 //when post is passed from Home, we can destrcucture post like post:{something, something, something}
 
@@ -65,14 +66,10 @@ function PostCard({
         {/* Add Delete Button */}
         {/* if there's a user and user.username == username then do....*/}
         {user && user.username === username && (
-          <Button
-            as="div"
-            color="red"
-            onClick={() => console.log("Delete Post")}
-            floated= "right"
-          >
-            <Icon name="trash" style={{margin: 0}}></Icon>
-          </Button>
+         
+          <DeleteButton
+            postId={id}          
+          />
         )}
       </Card.Content>
     </Card>
