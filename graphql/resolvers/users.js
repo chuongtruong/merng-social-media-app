@@ -30,6 +30,8 @@ module.exports = {
       }
 
       const user = await User.findOne({ username });
+      console.log("user", user);
+      
       if (!user) {
         errors.general = "User not found";
         throw new UserInputError("User not found", { errors });
@@ -43,7 +45,7 @@ module.exports = {
 
       const token = generateToken(user);
       return {
-        ...user,
+        ...user._doc,
         id: user._id,
         token,
       };
@@ -93,8 +95,9 @@ module.exports = {
       const token = generateToken(res);
 
       return {
-        ...res,
+        ...res._doc,
         id: res._id,
+
         token,
       };
     },

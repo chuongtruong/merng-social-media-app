@@ -12,7 +12,7 @@ import DeleteButton from "./DeleteButton";
 
 //when post is passed from Home, we can destrcucture post like post:{something, something, something}
 
-function PostCard({
+function PostCard({props,
   post: {
     body,
     createdAt,
@@ -44,6 +44,7 @@ function PostCard({
           src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
         />
         <Card.Header>{username}</Card.Header>
+        {/* Single Post Page, Clicked on created time will go to single post page */}
         <Card.Meta as={Link} to={`/posts/${id}`}>
           {moment(createdAt).fromNow(true)}
         </Card.Meta>
@@ -68,7 +69,7 @@ function PostCard({
         {user && user.username === username && (
          
           <DeleteButton
-            postId={id}          
+            postId={id}
           />
         )}
       </Card.Content>

@@ -25,7 +25,7 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
         //check if that user liked the post or not
         //change like button accordingly
         liked ? (
-          <Button color="teal">
+          <Button float="right" color="teal">
             <Icon name="heart" />
           </Button>
         ) : (
@@ -36,7 +36,7 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
         )
       ) : (
           //if there's no user loggin -> redirect to a login page
-        <Button as={Link} to="/login" color="teal">
+        <Button as={Link} to="/login" color="teal" basic>
           <Icon name="heart" />
         </Button>
       );
