@@ -1,65 +1,76 @@
-import React, {useState} from 'react'
-import gql from 'graphql-tag'
-import { useMutation } from '@apollo/react-hooks'
+import React, { useState } from "react";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 
-import { Button, Confirm, Icon } from 'semantic-ui-react';
+import { Button, Confirm, Icon } from "semantic-ui-react";
 
-import {FETCH_POSTS_QUERY} from '../util/graphql';
+import { FETCH_POSTS_QUERY } from "../util/graphql";
 
-function DeleteButton({postId, callback}){
-    const [confirmOpen, setConfirmOpen] = useState(false);
+function DeleteButton({ postId, commentId, callback }) {
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
-    const [deletePost] = useMutation(DELETE_POST_MUTATION,{
-        //need proxy to modify catch cache
-        update(proxy){
-            //close the confirm modal
-            setConfirmOpen(false);
+  const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
 
-            // remove post from cache
-            //read the cache
-            const data = proxy.readQuery({
-                query: FETCH_POSTS_QUERY,
-            })
-            //filter out deleted result
-            // data.getPosts = data.getPosts.filter(p=> p.id !== postId)
-            //update cache
-            proxy.writeQuery({
-                query: FETCH_POSTS_QUERY,
-                data:{getPosts: data.getPosts.filter(p=> p.id !== postId)}
-            });
+  const [deletePostOrMutation] = useMutation(mutation, {
+    //need proxy to modify catch cache
+    update(proxy) {
+      //close the confirm modal
+      setConfirmOpen(false);
 
-            if(callback){callback();} //help redirect to homepage if user hit delete the post 
+      if (!commentId) {
+        // remove post from cache
+        //read the cache
+        const data = proxy.readQuery({
+          query: FETCH_POSTS_QUERY,
+        });
+        //filter out deleted result
+        // data.getPosts = data.getPosts.filter(p=> p.id !== postId)
+        //update cache
+        proxy.writeQuery({
+          query: FETCH_POSTS_QUERY,
+          data: { getPosts: data.getPosts.filter((p) => p.id !== postId) },
+        });
 
-        },
-        variables: { postId}
-    })
+        if (callback) {
+          callback();
+        } //help redirect to homepage if user hit delete the post
+      }
+    },
+    variables: { postId, commentId },
+  });
 
-
-    return (
-<>
-        <Button
-          as="div"
-          color="red"
-          floated="right"
-          onClick={() => setConfirmOpen(true)}
-        >
-          <Icon name="trash" style={{ margin: 0 }} />
-        </Button>
+  return (
+    <>
+      <Button
+        as="div"
+        color="red"
+        floated="right"
+        onClick={() => setConfirmOpen(true)}
+      >
+        <Icon name="trash" style={{ margin: 0 }} />
+      </Button>
       <Confirm
         open={confirmOpen}
         onCancel={() => setConfirmOpen(false)}
-        onConfirm={deletePost}
+        onConfirm={deletePostOrMutation}
       />
     </>
-    );
+  );
 }
 
-
 const DELETE_POST_MUTATION = gql`
-    mutation deletePst($postId: ID!){
-        deletePost(postId: $postId)
+  mutation deletePost($postId: ID!) {
+    deletePost(postId: $postId)
+  }
+`;
+
+const DELETE_COMMENT_MUTATION = gql`
+  mutation deleteComment($postId: ID!, $commentId: ID!){
+    deleteComment(postId: $postId, commentId: $commentId){
+      id
+      comments{id username createdAt body}
+      commentCount
     }
-`
+  }
+`;
 export default DeleteButton;
-
-
