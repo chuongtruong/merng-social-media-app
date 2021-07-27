@@ -34,6 +34,7 @@ export default function PostForm() {
             values.body = '';
         },
             onError(err) {
+                console.log(err)
                 return err;
             }
     })

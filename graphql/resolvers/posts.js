@@ -10,7 +10,6 @@ module.exports = {
             //maybe the query won't never failed, but if no try-catch, no server will be stopped if the query is failed
             try{
                 const posts = await Post.find().sort({createdAt: -1});
-                console.log("findPosts query", posts)
                 return posts
             } catch(err) {
                 throw new Error(err)
@@ -20,7 +19,6 @@ module.exports = {
         async getPost(_, {postId}){
             try{
                 const post = await Post.findById(postId);
-                console.log("findPost query", post)
                 if (post){
                     return post
                 } else {
@@ -52,9 +50,6 @@ module.exports = {
                 createdAt: new Date().toISOString()
             });
 
-            console.log("New Post CreatedAt: ", newPost.createdAt);
-            console.log("Test new Date(): ", new Date().toISOString());
-
 
             const post = await newPost.save();
 
@@ -65,7 +60,6 @@ module.exports = {
         },
         async deletePost(_,{postId}, context){
             const user = checkAuth(context);
-            console.log(user);
             
             try{
                 const post = await Post.findById(postId)

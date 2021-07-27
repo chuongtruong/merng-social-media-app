@@ -7,7 +7,7 @@ import { AuthContext } from "../context/auth";
 import { useForm } from '../util/hooks'
 //props is used to redirect page after from is submmited successfully 
 function Register(props) {
-  const context = userContext(AuthContext)
+  const context = useContext(AuthContext)
   const [errors, setErrors] = useState({});
   const { onChange, onSubmit, values } = useForm(registerUser, {
     username: "",

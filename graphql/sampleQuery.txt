@@ -73,3 +73,32 @@ mutation commentOnPost{
   }
 }
 
+
+{
+  "data": {
+    "createComment": {
+      "commentCount": 3,
+      "comments": [
+        {
+          "id": "60fe7b88d6db4d78f03d6074",
+          "username": "John",
+          "createdAt": "2021-07-26T09:08:24.682Z",
+          "body": "@Carry Great"
+        },
+        {
+          "id": "60fe745a8481c236684ded43",
+          "username": "Brett",
+          "createdAt": "2021-07-26T08:37:46.939Z",
+          "body": "@Carry Glad to here that"
+        },
+        {
+          "id": "60fe4e6f287dae60d8a84224",
+          "username": "Carry",
+          "createdAt": "2021-07-26T05:55:59.957Z",
+          "body": "It was good. I'm waiting for the decision"
+        }
+      ]
+    }
+  }
+}
+

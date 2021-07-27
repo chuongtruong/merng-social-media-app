@@ -11,6 +11,9 @@ function DeleteButton({ postId, commentId, callback }) {
 
   const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
 
+  // console.log("CommentId is: ", commentId, postId)
+  // console.log("mutation is: ", mutation);
+
   const [deletePostOrMutation] = useMutation(mutation, {
     //need proxy to modify catch cache
     update(proxy) {
@@ -33,9 +36,17 @@ function DeleteButton({ postId, commentId, callback }) {
 
         if (callback) {
           callback();
-        } //help redirect to homepage if user hit delete the post
+        }
+        //help redirect to homepage if user hit delete the post
       }
     },
+
+    //error catch
+    onError(err) {
+      console.log(err)
+      return err;
+    },
+
     variables: { postId, commentId },
   });
 
@@ -65,10 +76,15 @@ const DELETE_POST_MUTATION = gql`
 `;
 
 const DELETE_COMMENT_MUTATION = gql`
-  mutation deleteComment($postId: ID!, $commentId: ID!){
-    deleteComment(postId: $postId, commentId: $commentId){
+  mutation deleteComment($postId: ID!, $commentId: ID!) {
+    deleteComment(postId: $postId, commentId: $commentId) {
       id
-      comments{id username createdAt body}
+      comments {
+        id
+        username
+        createdAt
+        body
+      }
       commentCount
     }
   }
