@@ -1,6 +1,6 @@
 import Reactfrom, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Card, Icon, Label, Image, Button } from "semantic-ui-react";
+import { Card, Icon, Label, Image, Button, Popup } from "semantic-ui-react";
 import moment from "moment";
 
 //need AuthContext to have access to current user who logged in
@@ -55,14 +55,21 @@ function PostCard({props,
         <LikeButton user={user} post={{id,likes,likeCount}}/>
 
         {/* Comments */}
-        <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
-          <Button color="teal" basic>
-            <Icon name="chat" />
+        <Popup 
+          inverted
+          content="Comment on post" 
+          trigger={
+            <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
+              <Button color="teal" basic>
+                <Icon name="chat" />
+              </Button>
+              <Label basic color="teal" pointing="left">
+                {comments.length}
+              </Label>
           </Button>
-          <Label basic color="teal" pointing="left">
-            {comments.length}
-          </Label>
-        </Button>
+          }
+          />
+        
 
         {/* Add Delete Button */}
         {/* if there's a user and user.username == username then do....*/}

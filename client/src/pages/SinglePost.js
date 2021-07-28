@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Button, Card, Grid, Image, Icon, Label, Form } from "semantic-ui-react";
 import { AuthContext } from "../context/auth";
@@ -11,7 +11,10 @@ import DeleteButton from "../components/DeleteButton";
 const SinglePost = (props) => {
   const postId = props.match.params.postId;
   const [comment, setComment] = useState('');
-
+  const { user } = useContext(AuthContext);
+  //a common use case for useRef use to reference to a HTML element, like selectQueryById in javascript
+  //https://www.youtube.com/watch?v=t2ypzz6gJm0
+  const commentInputRef = useRef(null)
 
   const { data: { getPost } = {} } = useQuery(FETCH_POST_QUERY, {
     variables: {
@@ -21,7 +24,10 @@ const SinglePost = (props) => {
 
   const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
     update(){
-      setComment('')
+      setComment('');
+      commentInputRef.current.blur() // commentInputRef is an useREF OBJECT, we need to access to the CURRENT property
+      //blur() is to stop the blinker in the text field
+      //focus() is to focus to the text field
     },
     variables:{ 
       postId,
@@ -33,7 +39,7 @@ const SinglePost = (props) => {
     props.history.push("/");
   }
 
-  const { user } = useContext(AuthContext);
+
 
   let postMarkup;
   if (!getPost) {
@@ -94,7 +100,14 @@ const SinglePost = (props) => {
                   <p>Post a comment</p>
                   <Form>
                     <div className="ui action input fluid">
-                      <input type="text" placeholder="comment.." name="comment" value={comment} onChange={event => setComment(event.target.value)}/>
+                      <input 
+                        type="text" 
+                        placeholder="comment.." 
+                        name="comment" 
+                        value={comment} 
+                        onChange={event => setComment(event.target.value)}
+                        ref={commentInputRef}
+                        />
                       <button 
                         type="submit" 
                         className="ui button teal" 
