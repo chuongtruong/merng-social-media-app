@@ -7,6 +7,8 @@ const resolvers = require('./graphql/resolvers');
 const {MONGODB} = require('./config.js');
 
 const pubsub = new PubSub();
+const PORT = process.env.PORT || 5000
+
 
 //setting up apollo playground server, more about ApolloSever https://www.apollographql.com/docs/apollo-server/api/apollo-server/
 const server = new ApolloServer({
@@ -17,18 +19,20 @@ const server = new ApolloServer({
     // This enables resolvers to share helpful context, such as a database connection.
 });
 
-
-
 // connect to mongoDB using mongoose
 mongoose.connect(MONGODB, {useNewUrlParser: true})
     .then(() => {
         console.log('MongoDB connection started')
-        return server.listen({port: 5000})
+        return server.listen({port: PORT})
     })
 
     .then(res => {
         console.log(`Appolo's server started at ${res.url}`);
-    });
+    })
+
+    .catch(err => {
+        console.error("Mongoose Error", err)
+    })
 //End setting up apollo server
 
 
