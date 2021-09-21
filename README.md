@@ -6,7 +6,7 @@ This web application is made with the inspiration of Facebook, a famous social m
 
 ## Live Demo
 
-    https://friendly-jepsen-f959ff.netlify.app/
+    https://memories-merng.netlify.app/
 
 ##  Tech stacks:
 ### Client
